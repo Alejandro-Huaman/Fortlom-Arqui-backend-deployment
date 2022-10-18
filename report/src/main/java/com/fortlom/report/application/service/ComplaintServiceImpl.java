@@ -33,8 +33,8 @@ public class ComplaintServiceImpl implements ComplaintService {
 
         List<Complaint>complaints=complaintRepository.findAll();
         for (Complaint complaint:complaints){
-            UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-            UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+            UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+            UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
 
             complaint.setUserAccountMain(userAccountmain);
             complaint.setUserAccountReported(userAccountreported);
@@ -48,8 +48,8 @@ public class ComplaintServiceImpl implements ComplaintService {
 
         Page<Complaint>complaints=complaintRepository.findAll(pageable);
         for (Complaint complaint:complaints){
-            UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-            UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+            UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+            UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
 
             complaint.setUserAccountMain(userAccountmain);
             complaint.setUserAccountReported(userAccountreported);
@@ -61,8 +61,8 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public Complaint getById(Long reportId) {
         Complaint complaint=complaintRepository.findById(reportId).orElseThrow(() -> new ResourceNotFoundException(ENTITY, reportId));
-        UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-        UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+        UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+        UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
         complaint.setUserAccountMain(userAccountmain);
         complaint.setUserAccountReported(userAccountreported);
         return complaint;
@@ -70,10 +70,10 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     public Complaint createforpublication(Long UserMainId, Long UserReportedId,Long PublicationId ,Complaint request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + UserMainId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + UserMainId,boolean.class);
-        boolean check3 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + UserReportedId,boolean.class);
-        boolean check4 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + UserReportedId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + UserMainId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + UserMainId,boolean.class);
+        boolean check3 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + UserReportedId,boolean.class);
+        boolean check4 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + UserReportedId,boolean.class);
         if((check1||check2)&&(check3||check4)) {
             request.setUserMain(UserMainId);
             request.setUserReported(UserReportedId);
@@ -88,10 +88,10 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     public Complaint createforcomment(Long UserMainId, Long UserReportedId, Long CommentId, Complaint request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + UserMainId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + UserMainId,boolean.class);
-        boolean check3 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + UserReportedId,boolean.class);
-        boolean check4 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + UserReportedId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + UserMainId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + UserMainId,boolean.class);
+        boolean check3 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + UserReportedId,boolean.class);
+        boolean check4 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + UserReportedId,boolean.class);
         if((check1||check2)&&(check3||check4)) {
             request.setUserMain(UserMainId);
             request.setUserReported(UserReportedId);
@@ -105,10 +105,10 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     public Complaint createforforumt(Long UserMainId, Long UserReportedId, Long ForumId, Complaint request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + UserMainId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + UserMainId,boolean.class);
-        boolean check3 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + UserReportedId,boolean.class);
-        boolean check4 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + UserReportedId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + UserMainId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + UserMainId,boolean.class);
+        boolean check3 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + UserReportedId,boolean.class);
+        boolean check4 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + UserReportedId,boolean.class);
         if((check1||check2)&&(check3||check4)) {
             request.setUserMain(UserMainId);
             request.setUserReported(UserReportedId);
@@ -126,8 +126,8 @@ public class ComplaintServiceImpl implements ComplaintService {
 
             List<Complaint>complaints=complaintRepository.findByUserMain(UserMainId);
             for (Complaint complaint:complaints){
-                UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-                UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+                UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+                UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
 
                 complaint.setUserAccountMain(userAccountmain);
                 complaint.setUserAccountReported(userAccountreported);
@@ -155,8 +155,8 @@ public class ComplaintServiceImpl implements ComplaintService {
     public List<Complaint> findByPublicationId(Long UserReportedId) {
         List<Complaint>complaints=complaintRepository.findByPublicationId(UserReportedId);
         for (Complaint complaint:complaints){
-            UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-            UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+            UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+            UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
 
             complaint.setUserAccountMain(userAccountmain);
             complaint.setUserAccountReported(userAccountreported);
@@ -169,8 +169,8 @@ public class ComplaintServiceImpl implements ComplaintService {
     public List<Complaint> findByforumId(Long UserReportedId) {
         List<Complaint>complaints=complaintRepository.findByForumId(UserReportedId);
         for (Complaint complaint:complaints){
-            UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-            UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+            UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+            UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
 
             complaint.setUserAccountMain(userAccountmain);
             complaint.setUserAccountReported(userAccountreported);
@@ -183,8 +183,8 @@ public class ComplaintServiceImpl implements ComplaintService {
     public List<Complaint> findBycommentId(Long UserReportedId) {
         List<Complaint>complaints=complaintRepository.findByCommentId(UserReportedId);
         for (Complaint complaint:complaints){
-            UserAccount userAccountmain= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
-            UserAccount userAccountreported= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
+            UserAccount userAccountmain= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountMain(),UserAccount.class);
+            UserAccount userAccountreported= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+complaint.getUserAccountReported(),UserAccount.class);
 
             complaint.setUserAccountMain(userAccountmain);
             complaint.setUserAccountReported(userAccountreported);
