@@ -43,8 +43,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image createforuser(Long userId, Image request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + userId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + userId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + userId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + userId,boolean.class);
         if(check1||check2) {
             request.setUserid(userId);
             return imageRepository.save(request);
@@ -58,7 +58,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Image createforpublication(Long publicationId, Image request) {
-        boolean check = restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/check/" + publicationId,boolean.class);
+        boolean check = restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/check/" + publicationId,boolean.class);
        if(check){
            request.setPublicationid(publicationId);
            return imageRepository.save(request);
