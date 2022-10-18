@@ -28,7 +28,7 @@ public class EventServiceImpl implements EventService {
     public List<Event> getAllEvents() {
         List<Event>events=eventRepository.findAll();
         for (Event event:events){
-            Artist artist= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
+            Artist artist= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
             event.setArtist(artist);
         }
         return events;
@@ -41,7 +41,7 @@ public class EventServiceImpl implements EventService {
 
         Page<Event>events=eventRepository.findAll(pageable);
         for (Event event:events){
-             Artist artist= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
+             Artist artist= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
              event.setArtist(artist);
         }
 
@@ -51,15 +51,15 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event getEventById(Long eventId) {
         Event event=eventRepository.findById(eventId).orElseThrow(() -> new ResourceNotFoundException(ENTITY, eventId));
-        Artist artist= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
+        Artist artist= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
         event.setArtist(artist);
         return event;
     }
 
     @Override
     public Event createEvent(Long Artist, Event request) {
-        boolean check= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/"+Artist,boolean.class);
-        boolean check2= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/checkpremium/"+Artist,boolean.class);
+        boolean check= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/"+Artist,boolean.class);
+        boolean check2= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/checkpremium/"+Artist,boolean.class);
         if(check && check2){
             request.setArtistid(Artist);
             Date date = new Date();
@@ -83,11 +83,11 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getEventsByArtistId(Long artistId) {
-        boolean check= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/"+artistId,boolean.class);
+        boolean check= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/"+artistId,boolean.class);
         if(check){
             List<Event>events=eventRepository.findByArtistid(artistId);
             for (Event event:events){
-                Artist artist= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
+                Artist artist= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/"+event.getArtistid(),Artist.class);
                 event.setArtist(artist);
             }
 
