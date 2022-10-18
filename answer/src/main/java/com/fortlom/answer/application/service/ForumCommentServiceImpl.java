@@ -78,7 +78,7 @@ public class ForumCommentServiceImpl implements ForumCommentService {
 
     @Override
     public List<ForumComment> getForumCommentByForumId(Long forumId) {
-        boolean check = restTemplate.getForObject("http://localhost:8083/api/v1/forumservice/check/" + forumId,boolean.class);
+        boolean check = restTemplate.getForObject("https://fortlom-interaction.herokuapp.com/api/v1/forumservice/check/" + forumId,boolean.class);
         if(check){
             List<ForumComment>forumComments=forumcommentRepository.findByForumid(forumId);
             for(ForumComment forumComment:forumComments){
