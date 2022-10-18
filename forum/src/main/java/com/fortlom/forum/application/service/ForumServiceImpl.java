@@ -31,7 +31,7 @@ public class ForumServiceImpl implements ForumService {
     public List<Forum> getAllForums() {
         List<Forum>forums=forumRepository.findAll();
         for (Forum forum:forums){
-            UserAccount userAccount= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
+            UserAccount userAccount= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
             forum.setUserAccount(userAccount);
         }
         return forums;
@@ -41,7 +41,7 @@ public class ForumServiceImpl implements ForumService {
     public Page<Forum> getAllForums(Pageable pageable) {
         Page<Forum>forums=forumRepository.findAll(pageable);
         for (Forum forum:forums){
-            UserAccount userAccount= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
+            UserAccount userAccount= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
             forum.setUserAccount(userAccount);
         }
 
@@ -53,7 +53,7 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public Forum getForumById(Long ForumId) {
         Forum forum=forumRepository.findById(ForumId).orElseThrow(() -> new ResourceNotFoundException(ENTITY, ForumId));
-        UserAccount userAccount= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
+        UserAccount userAccount= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
         forum.setUserAccount(userAccount);
         return forum;
     }
@@ -61,8 +61,8 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public Forum createForum(Long userId, Forum request) {
 
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + userId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + userId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + userId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + userId,boolean.class);
 
         if(check1||check2) {
             request.setUserid(userId);
@@ -75,13 +75,13 @@ public class ForumServiceImpl implements ForumService {
 
     @Override
     public List<Forum> getForumsByUserId(Long userId) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + userId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + userId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + userId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + userId,boolean.class);
 
         if(check1||check2) {
              List<Forum>forums=forumRepository.findByUserid(userId);
              for (Forum forum:forums){
-                UserAccount userAccount= restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
+                UserAccount userAccount= restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+forum.getUserid(),UserAccount.class);
                 forum.setUserAccount(userAccount);
              }
              return forums;
