@@ -42,7 +42,7 @@ public class OpinionController {
         return ResponseEntity.ok(mapping.map(opinionService.create(usersId, contentid,opinion), OpinionResource.class));
     }
     @DeleteMapping("/opinions/{opinionId}")
-    public ResponseEntity<?> deleteForum(@PathVariable Long opinionId) {
+    public ResponseEntity<?> deleteOpinion(@PathVariable Long opinionId) {
         return opinionService.delete(opinionId);
     }
 
@@ -71,7 +71,7 @@ public class OpinionController {
         return ResponseEntity.ok(mapper.modelListToPage(opinionService.getByContentidAndAgree(contentid,boolagree), pageable));
     }
     @GetMapping("/check/{contentid}/{Userid}")
-    public boolean existforumid(@PathVariable("contentid") Long contentid,@PathVariable("Userid") Long Userid){
+    public boolean existsbycontentIdandUserId(@PathVariable("contentid") Long contentid,@PathVariable("Userid") Long Userid){
         return opinionService.existsByContentidAndUserid(contentid,Userid);
     }
     @GetMapping("/getby/{contentid}/{Userid}")

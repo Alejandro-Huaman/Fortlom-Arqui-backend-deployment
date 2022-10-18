@@ -36,7 +36,7 @@ public class ForumCommentController {
 
     }
     @PostMapping("user/{usersId}/forums/{forumId}/forumcomments")
-    public ResponseEntity<ForumCommentResource> createForum(@PathVariable Long usersId,@PathVariable Long forumId,@RequestBody CreateForumCommentResource request) {
+    public ResponseEntity<ForumCommentResource> createForumComment(@PathVariable Long usersId,@PathVariable Long forumId,@RequestBody CreateForumCommentResource request) {
         ForumComment forumComment = mapping.map(request, ForumComment.class);
         return ResponseEntity.ok(mapping.map(forumCommentService.create(usersId, forumId,forumComment), ForumCommentResource.class));
     }

@@ -53,8 +53,8 @@ public class OpinionServiceImpl implements OpinionService {
 
     @Override
     public Opinion create(Long Userid, Long contentid,Opinion request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + Userid,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + Userid,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + Userid,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + Userid,boolean.class);
         if(check1 || check2){
             request.setUserid(Userid);
             request.setContentid(contentid);
@@ -76,8 +76,8 @@ public class OpinionServiceImpl implements OpinionService {
 
     @Override
     public List<Opinion> getUserid(Long Userid) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + Userid,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + Userid,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + Userid,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + Userid,boolean.class);
         if(check1 || check2){
 
             return opinionRepository.findByUserid(Userid);
@@ -88,8 +88,8 @@ public class OpinionServiceImpl implements OpinionService {
 
     @Override
     public List<Opinion> getContentid(Long contentid) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/events/check/" + contentid,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/check/" + contentid,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/events/check/" + contentid,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/check/" + contentid,boolean.class);
         if(check1 || check2){
 
             return opinionRepository.findByUserid(contentid);

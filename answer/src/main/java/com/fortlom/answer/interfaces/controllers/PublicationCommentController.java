@@ -43,12 +43,12 @@ public class PublicationCommentController {
     }
 
     @PostMapping("user/{usersId}/publications/{publicationId}/publicationcomments")
-    public ResponseEntity<PublicationCommentResource> create(@PathVariable Long usersId, @PathVariable Long publicationId, @RequestBody CreatePublicationCommentResource request) {
+    public ResponseEntity<PublicationCommentResource> createpublicationComment(@PathVariable Long usersId, @PathVariable Long publicationId, @RequestBody CreatePublicationCommentResource request) {
         PublicationComment publicationComment = mapping.map(request, PublicationComment.class);
         return ResponseEntity.ok(mapping.map(publicationCommentService.create(usersId, publicationId,publicationComment), PublicationCommentResource.class));
     }
     @GetMapping("publications/{publicationId}/publicationcomments")
-    public ResponseEntity<Page<PublicationCommentResource>> getForumCommentByPublicationId(@PathVariable Long publicationId,Pageable pageable) {
+    public ResponseEntity<Page<PublicationCommentResource>> getPublicationCommentByPublicationId(@PathVariable Long publicationId,Pageable pageable) {
 
         return ResponseEntity.ok(mapper.modelListToPage(publicationCommentService.getCommentByPublicationId(publicationId), pageable));
     }

@@ -33,7 +33,7 @@ public class PublicationCommentServiceImpl implements PublicationCommentService 
     public List<PublicationComment> getAll() {
         List<PublicationComment>publicationComments=publicationCommentRepository.findAll();
         for(PublicationComment publicationComment:publicationComments){
-            Publication publication=restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
+            Publication publication=restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
             publicationComment.setPublication(publication);
 
 
@@ -45,7 +45,7 @@ public class PublicationCommentServiceImpl implements PublicationCommentService 
     public Page<PublicationComment> getAll(Pageable pageable) {
         Page<PublicationComment>publicationComments=publicationCommentRepository.findAll(pageable);
         for(PublicationComment publicationComment:publicationComments){
-            Publication publication=restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
+            Publication publication=restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
             publicationComment.setPublication(publication);
 
 
@@ -56,16 +56,16 @@ public class PublicationCommentServiceImpl implements PublicationCommentService 
     @Override
     public PublicationComment getById(Long commentId) {
         PublicationComment publicationComment= publicationCommentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException(ENTITY, commentId));
-        Publication publication=restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
+        Publication publication=restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
         publicationComment.setPublication(publication);
         return publicationComment;
     }
 
     @Override
     public PublicationComment create(Long userId, Long publicationId, PublicationComment request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + userId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + userId,boolean.class);
-        boolean check3 = restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/check/" + publicationId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + userId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + userId,boolean.class);
+        boolean check3 = restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/check/" + publicationId,boolean.class);
         if((check1 || check2) && check3) {
             request.setUserid(userId);
             request.setPublicationid(publicationId);
@@ -80,12 +80,12 @@ public class PublicationCommentServiceImpl implements PublicationCommentService 
 
     @Override
     public List<PublicationComment> getCommentByPublicationId(Long publicationId) {
-        boolean check = restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/check/" + publicationId,boolean.class);
+        boolean check = restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/check/" + publicationId,boolean.class);
         if(check){
             List<PublicationComment>publicationComments=publicationCommentRepository.findByPublicationid(publicationId);
             for(PublicationComment publicationComment:publicationComments){
-                Publication publication=restTemplate.getForObject("http://localhost:8082/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
-                UserAccount userAccount=restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+publicationComment.getUserid(),UserAccount.class);
+                Publication publication=restTemplate.getForObject("https://fortlom-content.herokuapp.com/api/v1/contentservice/publications/"+publicationComment.getPublicationid(),Publication.class);
+                UserAccount userAccount=restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+publicationComment.getUserid(),UserAccount.class);
                 publicationComment.setUserAccount(userAccount);
                 publicationComment.setPublication(publication);
 

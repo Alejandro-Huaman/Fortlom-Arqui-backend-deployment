@@ -32,7 +32,7 @@ public class ForumCommentServiceImpl implements ForumCommentService {
     public List<ForumComment> getAll() {
         List<ForumComment>forumComments=forumcommentRepository.findAll();
         for(ForumComment forumComment:forumComments){
-            Forum forum=restTemplate.getForObject("http://localhost:8083/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
+            Forum forum=restTemplate.getForObject("https://fortlom-interaction.herokuapp.com/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
             forumComment.setForum(forum);
 
 
@@ -44,7 +44,7 @@ public class ForumCommentServiceImpl implements ForumCommentService {
     public Page<ForumComment> getAll(Pageable pageable) {
         Page<ForumComment>forumComments=forumcommentRepository.findAll(pageable);
         for(ForumComment forumComment:forumComments){
-            Forum forum=restTemplate.getForObject("http://localhost:8083/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
+            Forum forum=restTemplate.getForObject("https://fortlom-interaction.herokuapp.com/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
             forumComment.setForum(forum);
 
 
@@ -55,16 +55,16 @@ public class ForumCommentServiceImpl implements ForumCommentService {
     @Override
     public ForumComment getById(Long forumcommentId) {
         ForumComment forumComment= forumcommentRepository.findById(forumcommentId).orElseThrow(() -> new ResourceNotFoundException(ENTITY, forumcommentId));
-        Forum forum=restTemplate.getForObject("http://localhost:8083/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
+        Forum forum=restTemplate.getForObject("https://fortlom-interaction.herokuapp.com/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
         forumComment.setForum(forum);
         return forumComment;
     }
 
     @Override
     public ForumComment create(Long userId, Long forumId, ForumComment request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + userId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + userId,boolean.class);
-        boolean check3 = restTemplate.getForObject("http://localhost:8083/api/v1/forumservice/check/" + forumId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + userId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + userId,boolean.class);
+        boolean check3 = restTemplate.getForObject("https://fortlom-interaction.herokuapp.com/api/v1/forumservice/check/" + forumId,boolean.class);
         if((check1 || check2) && check3) {
             request.setUserid(userId);
             request.setForumid(forumId);
@@ -82,8 +82,8 @@ public class ForumCommentServiceImpl implements ForumCommentService {
         if(check){
             List<ForumComment>forumComments=forumcommentRepository.findByForumid(forumId);
             for(ForumComment forumComment:forumComments){
-                Forum forum=restTemplate.getForObject("http://localhost:8083/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
-                UserAccount userAccount=restTemplate.getForObject("http://localhost:8081/api/v1/userservice/users/"+forumComment.getUserid(),UserAccount.class);
+                Forum forum=restTemplate.getForObject("https://fortlom-interaction.herokuapp.com/api/v1/forumservice/forums/"+forumComment.getForumid(),Forum.class);
+                UserAccount userAccount=restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/users/"+forumComment.getUserid(),UserAccount.class);
                 forumComment.setUserAccount(userAccount);
                 forumComment.setForum(forum);
 
