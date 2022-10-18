@@ -45,8 +45,8 @@ public class RateServiceImpl implements RateService {
 
     @Override
     public Rate createRate(Long artistId,Long fanaticId, Rate request) {
-        boolean check1 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/artists/check/" + artistId,boolean.class);
-        boolean check2 = restTemplate.getForObject("http://localhost:8081/api/v1/userservice/fanatics/check/" + fanaticId,boolean.class);
+        boolean check1 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/artists/check/" + artistId,boolean.class);
+        boolean check2 = restTemplate.getForObject("https://fortlom-account.herokuapp.com/api/v1/userservice/fanatics/check/" + fanaticId,boolean.class);
         if(check1 && check2) {
             request.setArtistid(artistId);
             request.setFanaticid(fanaticId);

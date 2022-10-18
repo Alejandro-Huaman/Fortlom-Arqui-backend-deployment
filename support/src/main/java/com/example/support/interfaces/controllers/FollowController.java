@@ -32,7 +32,7 @@ public class FollowController {
         return mapper.modelListToPage(followService.getAllForums(), pageable);
     }
     @GetMapping("/follows/{followId}")
-    public ResponseEntity<FollowResource> getRateById(@PathVariable Long followId) {
+    public ResponseEntity<FollowResource> getFollowById(@PathVariable Long followId) {
 
         return ResponseEntity.ok(mapper.toResource(followService.getFollowById(followId)));
 
@@ -44,7 +44,7 @@ public class FollowController {
     }
 
     @PostMapping("/artists/{artistId}/fanatics/{fanaticId}/boolfollow/{followbool}/follows")
-    public ResponseEntity<FollowResource> createRate(@PathVariable Long artistId,@PathVariable Long fanaticId,@PathVariable boolean followbool) {
+    public ResponseEntity<FollowResource> createFollow(@PathVariable Long artistId,@PathVariable Long fanaticId,@PathVariable boolean followbool) {
         return ResponseEntity.ok(mapper.toResource(followService.createFollow(fanaticId,artistId,followbool)));
     }
     @GetMapping("/check/{artistoid}/{agree}")
