@@ -14,7 +14,7 @@ import java.util.Optional;
 public class RolServiceImpl implements RolService {
     @Autowired
     RolRepository rolRepository;
-    private static String[] DEFAULT_ROLES = { "Role_Fanatic","Role_Artist","Role_Upgrade_Artist", "Role_Ban_Fanatic","Role_Ban_Artist"};
+    private static String[] DEFAULT_ROLES = { "Role_Fanatic","Role_Artist","Role_Upgrade_Artist", "Role_Ban_Fanatic","Role_Ban_Artist","Role_Admin"};
     @Override
     public Optional<Rol> findByName(Rolname name) {
         return rolRepository.findByName(name);

@@ -12,7 +12,8 @@ import javax.validation.constraints.Size;
 
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -36,6 +37,13 @@ public class Admin {
 
     @NotNull
     @NotBlank
-    @Size(max = 20)
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Rol> roles=new HashSet<>();
+
+
 }

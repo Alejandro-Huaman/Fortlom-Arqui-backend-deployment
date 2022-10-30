@@ -56,4 +56,8 @@ public class FanaticController {
     public boolean existsartistid(@PathVariable("fanaticId") Long fanaticId){
         return fanaticService.existsfanatic(fanaticId);
     }
+    @PutMapping("/ban/{fanaticId}")
+    public FanaticResource BanArtist(@PathVariable("fanaticId") Long fanaticId){
+        return mapper.toResource(fanaticService.banFanatic(fanaticId));
+    }
 }

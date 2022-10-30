@@ -28,7 +28,7 @@ public class ComplaintController {
 
 
     @GetMapping("/complaints")
-    public Page<ComplaintResource> getAllComplaints(Pageable pageable) {
+    public Page<ComplaintResource> getAllForums(Pageable pageable) {
         return mapper.modelListToPage(complaintService.getAll(), pageable);
     }
     @GetMapping("/complaints/{complaintId}")
@@ -61,7 +61,7 @@ public class ComplaintController {
         return mapper.modelListToPage(complaintService.findByUserReportedId(UserReportedId), pageable);
     }
     @DeleteMapping("/complaints/{complaintId}")
-    public ResponseEntity<?> deleteComplaint(@PathVariable Long complaintId) {
+    public ResponseEntity<?> deleteReport(@PathVariable Long complaintId) {
         return complaintService.delete(complaintId);
     }
     @GetMapping("/publications/{publicationId}/complaints")

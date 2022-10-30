@@ -3,9 +3,12 @@ package com.fortlom.account.application.service;
 
 import com.fortlom.account.application.exception.ResourceNotFoundException;
 import com.fortlom.account.application.exception.ResourcePerzonalized;
+import com.fortlom.account.domain.UserAggregate.entity.Rol;
 import com.fortlom.account.domain.UserAggregate.entity.childentity.Fanatic;
+import com.fortlom.account.domain.UserAggregate.enumeration.Rolname;
 import com.fortlom.account.domain.UserAggregate.repository.FanaticRepository;
 import com.fortlom.account.domain.UserAggregate.service.FanaticService;
+import com.fortlom.account.domain.UserAggregate.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,7 +30,8 @@ public class FanaticServiceImpl implements FanaticService {
     @Autowired
     private FanaticRepository fanaticRepository;
 
-
+    @Autowired
+    RolService rolService;
     @Override
     public List<Fanatic> getAll() {
         return fanaticRepository.findAll();
@@ -97,6 +102,19 @@ public class FanaticServiceImpl implements FanaticService {
 
         return fanaticRepository.save(artist);
     }
+
+    @Override
+    public Fanatic banFanatic(Long artistId) {
+        return fanaticRepository.findById(artistId).map(post->{
+            Set<Rol> roles = new HashSet<>();
+            roles.add(rolService.findByName(Rolname.Role_Ban_Fanatic).get());
+            post.setRoles(roles);
+            fanaticRepository.save(post);
+            return post;
+
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, artistId));
+    }
+
 
     @Override
     public void save(Fanatic fanatic) {

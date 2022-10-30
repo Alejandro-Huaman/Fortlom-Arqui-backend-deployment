@@ -26,5 +26,6 @@ public interface ArtistService {
     boolean existsartist(Long artistId);
     boolean ispremium(Long artistId);
     Artist upgradeartist(Long artistId);
+    Artist banArtist(Long artistId);
 
 }

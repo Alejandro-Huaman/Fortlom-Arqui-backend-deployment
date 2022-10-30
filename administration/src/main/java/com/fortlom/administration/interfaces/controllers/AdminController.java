@@ -12,7 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+
 @RestController
+@CrossOrigin
 @RequestMapping("/api/v1/administrationservice")
 public class AdminController {
 
@@ -26,13 +30,21 @@ public class AdminController {
     private ModelMapper mapping;
 
     @GetMapping("/admins/{adminId}")
-    public ResponseEntity<AdminResource> getById(@PathVariable Long adminId) {
+    public AdminResource getById(@PathVariable Long adminId) {
 
-        return ResponseEntity.ok(mapper.toResource(adminService.getById(adminId)));
+        return mapper.toResource(adminService.getById(adminId));
+
+    }
+    @GetMapping("/admins/name/{adminName}")
+    public AdminResource getByusername(@PathVariable String adminName) {
+
+        Admin admin= adminService.getbyusername(adminName);
+
+        return mapper.toResource(admin);
 
     }
     @PostMapping("/admins")
-    public ResponseEntity<AdminResource> createForum(@RequestBody CreateAdminResource request) {
+    public ResponseEntity<AdminResource> create(@RequestBody CreateAdminResource request) {
         Admin admin = mapping.map(request, Admin.class);
         return ResponseEntity.ok(mapping.map(adminService.create(admin), AdminResource.class));
     }

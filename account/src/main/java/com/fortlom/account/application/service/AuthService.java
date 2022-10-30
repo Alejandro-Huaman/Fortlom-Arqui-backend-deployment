@@ -3,17 +3,17 @@ package com.fortlom.account.application.service;
 import com.fortlom.account.application.exception.Message;
 import com.fortlom.account.application.jwt.jwtProvider;
 import com.fortlom.account.domain.UserAggregate.entity.Rol;
+import com.fortlom.account.domain.UserAggregate.entity.UserAccount;
 import com.fortlom.account.domain.UserAggregate.entity.childentity.Artist;
 import com.fortlom.account.domain.UserAggregate.entity.childentity.Fanatic;
 import com.fortlom.account.domain.UserAggregate.enumeration.Rolname;
 import com.fortlom.account.domain.UserAggregate.service.ArtistService;
 import com.fortlom.account.domain.UserAggregate.service.FanaticService;
 import com.fortlom.account.domain.UserAggregate.service.RolService;
-import com.fortlom.account.interfaces.dto.authetication.LoginUser;
-import com.fortlom.account.interfaces.dto.authetication.NewArtist;
-import com.fortlom.account.interfaces.dto.authetication.NewFanatic;
-import com.fortlom.account.interfaces.dto.authetication.jwtDto;
+import com.fortlom.account.domain.UserAggregate.service.UserAccountService;
+import com.fortlom.account.interfaces.dto.authetication.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -48,6 +49,11 @@ public class AuthService {
     @Autowired
     RolService rolService;
 
+    @Autowired
+    UserAccountService userAccountService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     public Rol getrolefanatic() throws Message {
 
@@ -66,6 +72,17 @@ public class AuthService {
         }
         throw new Message("Error");
     }
+
+    public Rol getroleadmin() throws Message {
+
+        Optional<Rol>value=rolService.findByName(Rolname.Role_Admin);
+        if(value.isPresent()){
+            return value.get();
+        }
+        throw new Message("Error");
+    }
+
+
     public ResponseEntity<?> registerfanatic(NewFanatic request, BindingResult bindingResult) throws Message {
         if (bindingResult.hasErrors()){
 
@@ -119,6 +136,20 @@ public class AuthService {
         artistService.save(artist);
         return new ResponseEntity(new Message("new artist saved"),HttpStatus.CREATED);
 
+    }
+    public ResponseEntity<?> registeradmin(RegisterUser registerUser, BindingResult bindingResult) throws Message {
+
+        UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(registerUser.getUsername());
+        userAccount.setPassword(passwordEncoder.encode(registerUser.getPassword()));
+        userAccount.setRealname("Admin");
+        userAccount.setLastname("Lastname");
+        userAccount.setEmail(registerUser.getEmail());
+        Set<Rol> roles = new HashSet<>();
+        roles.add(getroleadmin());
+        userAccount.setRoles(roles);
+        userAccountService.save(userAccount);
+        return new ResponseEntity(new Message("admin"),HttpStatus.CREATED);
     }
 
 

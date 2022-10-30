@@ -6,14 +6,9 @@ import com.fortlom.administration.domain.adminAgreegate.persistence.AdminReposit
 import com.fortlom.administration.domain.adminAgreegate.service.AdminService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.validation.Validator;
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -38,5 +33,26 @@ public class AdminServiceImpl implements AdminService {
 
 
         return  adminRepository.save(admin);
+    }
+
+    @Override
+    public Optional<Admin> getbyNombreUsuario(String userName) {
+        System.out.println(userName);
+        return adminRepository.findByUsername(userName);
+    }
+
+    @Override
+    public Admin getbyusername(String userName) {
+        return adminRepository.findByUsername(userName).get();
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return adminRepository.existsByUsername(username);
+    }
+
+    @Override
+    public void save(Admin admin) {
+        adminRepository.save(admin);
     }
 }

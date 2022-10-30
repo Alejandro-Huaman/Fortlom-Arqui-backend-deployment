@@ -1,10 +1,7 @@
 package com.fortlom.account.interfaces.controllers;
 import com.fortlom.account.application.exception.Message;
 import com.fortlom.account.application.service.AuthService;
-import com.fortlom.account.interfaces.dto.authetication.LoginUser;
-import com.fortlom.account.interfaces.dto.authetication.NewArtist;
-import com.fortlom.account.interfaces.dto.authetication.NewFanatic;
-import com.fortlom.account.interfaces.dto.authetication.jwtDto;
+import com.fortlom.account.interfaces.dto.authetication.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +31,13 @@ public class AuthController {
     public ResponseEntity<?> registerartist(@Valid @RequestBody NewArtist request, BindingResult bindingResult) throws Message {
 
         return  authService.registerartist(request,bindingResult);
+
+
+    }
+    @PostMapping("/admin")
+    public ResponseEntity<?> registeradmin(@Valid @RequestBody RegisterUser request, BindingResult bindingResult) throws Message {
+
+        return  authService.registeradmin(request,bindingResult);
 
 
     }

@@ -20,7 +20,7 @@ public interface FanaticService {
     boolean existsByEmail(String email);
     Optional<Fanatic>getbyUsernameOrEmail(String UsernameOremail);
     Fanatic create(Fanatic artist);
-
+    Fanatic banFanatic(Long artistId);
     void save(Fanatic fanatic);
     boolean existsfanatic(Long fanaticid);
 }

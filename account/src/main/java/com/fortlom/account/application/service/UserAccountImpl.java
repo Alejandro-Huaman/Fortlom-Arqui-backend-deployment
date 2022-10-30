@@ -74,4 +74,6 @@ public class UserAccountImpl implements UserAccountService {
     public UserAccount getByUsername(String Username) {
         return userAccounRepository.findByUsername(Username)  .orElseThrow(() -> new ResourceNotFoundException("User", (long)0));
     }
+
+
 }

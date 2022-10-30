@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
+
 public class AdminMapper {
 
     @Autowired
@@ -17,6 +19,9 @@ public class AdminMapper {
 
 
     public AdminResource toResource(Admin model) {
+        return mapper.map(model, AdminResource.class);
+    }
+    public AdminResource toResource(Optional<Admin> model) {
         return mapper.map(model, AdminResource.class);
     }
 
