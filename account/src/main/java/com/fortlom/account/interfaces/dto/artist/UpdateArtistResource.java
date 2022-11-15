@@ -15,5 +15,5 @@ public class UpdateArtistResource {
 
     private String twitterLink;
 
-
+    private String aboutMe;
 }

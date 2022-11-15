@@ -102,7 +102,11 @@ public class ArtistController {
     public ArtistResource BanArtist(@PathVariable("artistId") Long artistId){
         return mapper.toResource(artistService.banArtist(artistId));
     }
+    @PutMapping("/artist/{artistId}/AboutMe")
+    public ArtistResource updateAboutMe(@PathVariable Long artistId, @RequestBody UpdateArtistResource request){
+        return mapper.toResource(artistService.setAboutMe(artistId,mapper.toModel(request)));
 
+    }
 
     @GetMapping("/check/{artistId}")
     public boolean existsartistid(@PathVariable("artistId") Long artistId){

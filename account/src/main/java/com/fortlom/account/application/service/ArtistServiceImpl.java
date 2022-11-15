@@ -174,4 +174,13 @@ public class ArtistServiceImpl implements ArtistService {
 
         }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, artistId));
     }
+
+    @Override
+    public Artist setAboutMe(Long artistId, Artist request) {
+        return artistRepository.findById(artistId).map(post->{
+            post.setAboutMe(request.getAboutMe());
+            artistRepository.save(post);
+            return  post;
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, artistId));
+    }
 }

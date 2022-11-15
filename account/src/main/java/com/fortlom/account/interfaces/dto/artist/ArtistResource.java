@@ -25,4 +25,6 @@ public class ArtistResource {
     private String facebookLink;
 
     private String twitterLink;
+
+    private String aboutMe;
 }

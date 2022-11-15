@@ -27,5 +27,6 @@ public interface ArtistService {
     boolean ispremium(Long artistId);
     Artist upgradeartist(Long artistId);
     Artist banArtist(Long artistId);
+    Artist setAboutMe(Long artistId,Artist request);
 
 }

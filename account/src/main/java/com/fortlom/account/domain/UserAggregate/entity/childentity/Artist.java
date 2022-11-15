@@ -32,6 +32,8 @@ public class Artist extends UserAccount {
 
     private String twitterLink;
 
+    private String aboutMe;
+
     @OneToMany(targetEntity = Tag.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "artistid",referencedColumnName = "id")
     private List<Tag> tags;
