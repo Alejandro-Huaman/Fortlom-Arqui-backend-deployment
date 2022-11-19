@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fortlom.account.domain.MusicAggregate.entity.Album;
 import com.fortlom.account.domain.UserAggregate.entity.Tag;
 import com.fortlom.account.domain.UserAggregate.entity.UserAccount;
 import lombok.*;
@@ -37,4 +38,8 @@ public class Artist extends UserAccount {
     @OneToMany(targetEntity = Tag.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "artistid",referencedColumnName = "id")
     private List<Tag> tags;
+
+    @OneToMany(targetEntity = Album.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "artistid",referencedColumnName = "id")
+    private List<Album> albums;
 }
