@@ -7,6 +7,8 @@ import com.fortlom.account.domain.MusicAggregate.repository.AlbumRepository;
 import com.fortlom.account.domain.MusicAggregate.service.AlbumService;
 import com.fortlom.account.domain.UserAggregate.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,9 +52,15 @@ public class AlbumServiceImpl implements AlbumService {
         }).orElseThrow(() -> new ResourceNotFoundException("Album", Artist));
     }
 
+    @Override
+    public List<Album> getall() {
+        return albumRepository.findAll();
+    }
 
-
-
+    @Override
+    public Page<Album> getall(Pageable pageable) {
+        return albumRepository.findAll(pageable);
+    }
 
 
 }

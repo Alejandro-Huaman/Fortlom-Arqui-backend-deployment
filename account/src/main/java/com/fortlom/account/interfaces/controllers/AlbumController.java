@@ -4,6 +4,7 @@ import com.fortlom.account.domain.MusicAggregate.service.AlbumService;
 import com.fortlom.account.interfaces.dto.album.AlbumResource;
 import com.fortlom.account.interfaces.dto.album.CreateAlbumResource;
 import com.fortlom.account.interfaces.dto.album.UpdateAlbumResource;
+import com.fortlom.account.interfaces.dto.fanatic.FanaticResource;
 import com.fortlom.account.interfaces.mapping.entity.AlbumMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,10 @@ public class AlbumController {
     public AlbumResource update(@PathVariable Long albumId, @RequestBody UpdateAlbumResource request){
         return albumMapper.toResource(albumService.updateAlbum(albumId,albumMapper.toModel(request)));
     }
-
+    @GetMapping
+    public Page<AlbumResource> getAll(Pageable pageable) {
+        return albumMapper.modelListToPage(albumService.getall(), pageable);
+    }
 
 
 
