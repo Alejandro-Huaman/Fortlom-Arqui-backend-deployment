@@ -53,6 +53,24 @@ public class ImagePublicationController {
 
         return ResponseEntity.ok(mapper.modelListToPage(imageService.getImageByPublicationId(publicationsId), pageable));
     }
+    @GetMapping("/album/{albumsId}/images")
+    public ResponseEntity<Page<ImageResource>> getImageByalbumsId(@PathVariable Long albumsId, Pageable pageable) {
 
+        return ResponseEntity.ok(mapper.modelListToPage(imageService.getImageByAlbumId(albumsId), pageable));
+    }
+    @PostMapping("/upload/albums/{albumsId}/images")
+    public ResponseEntity<ImageResource> createimagefoalbum(@PathVariable Long albumsId, @RequestParam MultipartFile multipartFile) throws IOException {
+        BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+        if(bi == null){
+            return new ResponseEntity(new Message("imagen no válida"), HttpStatus.BAD_REQUEST);
+        }
+
+        Map result = cloudinaryService.upload(multipartFile);
+        Image image=new Image();
+        image.setImagenUrl((String)result.get("url"));
+        image.setImagenId( (String)result.get("public_id"));
+
+        return ResponseEntity.ok( mapper.toResource(imageService.createforalbum(albumsId,image)));
+    }
 
 }

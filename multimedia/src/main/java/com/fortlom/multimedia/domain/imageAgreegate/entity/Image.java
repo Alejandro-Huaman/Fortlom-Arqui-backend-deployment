@@ -24,5 +24,7 @@ public class Image {
 
     private Long publicationid;
 
+    private Long albumid;
+
 
 }

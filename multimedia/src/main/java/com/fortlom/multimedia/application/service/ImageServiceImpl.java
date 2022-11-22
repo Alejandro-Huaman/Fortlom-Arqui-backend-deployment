@@ -80,6 +80,17 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public Image createforalbum(Long albumId, Image image) {
+        image.setAlbumid(albumId);
+        return imageRepository.save(image);
+    }
+
+    @Override
+    public List<Image> getImageByAlbumId(Long AlbumId) {
+        return imageRepository.findByAlbumid(AlbumId);
+    }
+
+    @Override
     public ResponseEntity<?> delete(Long PublicationId) {
         return imageRepository.findById(PublicationId).map(Publication -> {
             imageRepository.delete(Publication);

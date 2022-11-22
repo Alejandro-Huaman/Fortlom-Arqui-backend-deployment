@@ -9,4 +9,6 @@ public interface ImageRepository  extends JpaRepository<Image,Long>{
     List<Image> findByPublicationid(Long publicationId);
 
     List<Image> findByUserid(Long UserId);
+
+    List<Image> findByAlbumid(Long albumId);
 }

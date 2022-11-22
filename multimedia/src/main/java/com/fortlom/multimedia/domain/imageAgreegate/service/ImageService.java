@@ -14,6 +14,8 @@ public interface ImageService {
     Image createforpublication(Long publicationId,Image image);
     List<Image> getImageByUserId(Long userId);
     List<Image> getImageByPublicationId(Long PublicationId);
+    Image createforalbum(Long albumId,Image image);
+    List<Image> getImageByAlbumId(Long AlbumId);
     ResponseEntity<?> delete(Long PublicationId);
     boolean exists(Long id);
 }
